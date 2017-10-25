@@ -1,6 +1,10 @@
 package model
 
-abstract class ModificacionStat (var stat: String, valor: Int){
+trait Modificacion{
+  def aplicarA(heroe: Heroe)
+}
+
+abstract class ModificacionStat (val stat: String, val valor: Int){
   def aplicarA(valorInicial: Int): Int
 }
 

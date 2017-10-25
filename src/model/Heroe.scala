@@ -17,6 +17,8 @@ case class Heroe(
     val nuevosStats = stats + (nombreStat -> valor)
     copy(stats = nuevosStats)
   }
+  
+  def valorStatPrincipal() = stat(trabajo.statPrincipal)
 
   def equipar(item: Item): Heroe = {
     if (item.puedeEquiparseEn(this)){
