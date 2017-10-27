@@ -2,23 +2,46 @@ package model
 
 case class Heroe(
     val stats: Map[String, Int] = Map[String, Int]("hp" -> 100, "fuerza" -> 100, "velocidad" -> 100, "inteligencia" -> 100),
-    //COMO INICIALIZO LOS STATS "POR CONSTRUCTOR" ???
-    val slots:List[String] = List("cabeza", "torso", "mano", "mano"),
+    val slots: List[String] = List("cabeza", "torso", "mano", "mano"),
     val inventario: List[Item] = List(),
-    val trabajo: Trabajo = ninguno //HAY ALGO MEJOR PARA PONER???
+    val trabajo: Trabajo = ninguno
     ) {
   
   def trabajo(nuevoTrabajo: Trabajo) = copy(trabajo = nuevoTrabajo)
 
-  def stat(nombreStat: String) = 1.max(inventario.foldLeft
-      (trabajo.aplicarModificacionesA(nombreStat, stats(nombreStat)))((valor, item) => item.aplicarModificacionesA(nombreStat, valor)))
-
-  def stat(nombreStat: String, valor: Int) = {
+  def getStat(nombreStat: String): Int = {
+    val modificacionesAAplicar = trabajo.modificaciones ++ inventario.flatMap(_.modificaciones)
+    1.max(aplicarModificaciones(modificacionesAAplicar).getStatBase(nombreStat))
+  }
+    
+  def getStatBase(nombreStat: String) = {
+    stats(nombreStat)
+  }
+    
+  def incrementarStatBase(nombreStat: String, valor: Int) = {
+    setStatBase(nombreStat, getStatBase(nombreStat) + valor)
+  }
+  
+  def setStatBase(nombreStat: String, valor: Int) = {
     val nuevosStats = stats + (nombreStat -> valor)
     copy(stats = nuevosStats)
   }
+   
+  def aplicarModificaciones(modificaciones: List[Modificacion]) = {
+    modificaciones.foldLeft(this) {(heroe, modificacion) => 
+      modificacion match {
+        case VariarStatEn(stat, valor)                           => heroe.incrementarStatBase(stat, valor)
+        case SetearStat(stat, valor)                             => heroe.setStatBase(stat, valor)
+        case IncrementarStatsEnPorcentajeDePrincipal(porcentaje) => {
+          val incremento = (valorStatPrincipal() * porcentaje).round
+          stats.keys.foldLeft(heroe) {(heroe, stat) => heroe.incrementarStatBase(stat, incremento)}
+        }
+        //otro case
+        }
+      }
+  }
   
-  def valorStatPrincipal() = stat(trabajo.statPrincipal)
+  def valorStatPrincipal() = getStat(trabajo.statPrincipal)
 
   def equipar(item: Item): Heroe = {
     if (item.puedeEquiparseEn(this)){

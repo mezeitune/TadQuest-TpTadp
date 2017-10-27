@@ -1,5 +1,5 @@
 package model
 
-class Tarea (){
+class Tarea (val modificaciones: List[Modificacion]){
   
 }
