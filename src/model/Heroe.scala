@@ -1,11 +1,18 @@
 package model
 
-case class Heroe(
+
+
+class Heroe(
     val stats: Map[String, Int] = Map[String, Int]("hp" -> 100, "fuerza" -> 100, "velocidad" -> 100, "inteligencia" -> 100),
     val slots: List[String] = List("cabeza", "torso", "mano", "mano"),
     val inventario: List[Item] = List(),
     val trabajo: Trabajo = ninguno
     ) {
+  
+  def copy(stats: Map[String, Int] = Map[String, Int]("hp" -> 100, "fuerza" -> 100, "velocidad" -> 100, "inteligencia" -> 100),
+    slots: List[String] = List("cabeza", "torso", "mano", "mano"),
+    inventario: List[Item] = List(),
+    trabajo: Trabajo = ninguno) = new Heroe(stats,slots,inventario,trabajo)
   
   def trabajo(nuevoTrabajo: Trabajo) = copy(trabajo = nuevoTrabajo)
 
@@ -56,3 +63,11 @@ case class Heroe(
   def desequipar(item: Item) = copy(inventario = inventario.diff(List(item)))
 
 }
+
+
+case class Guerrero(
+    override val stats: Map[String, Int] = Map[String, Int]("hp" -> 100, "fuerza" -> 100, "velocidad" -> 100, "inteligencia" -> 100),
+     override val slots: List[String] = List("cabeza", "torso", "mano", "mano"),
+     override val inventario: List[Item] = List(),
+     override val trabajo: Trabajo = ninguno
+    ) extends Heroe
