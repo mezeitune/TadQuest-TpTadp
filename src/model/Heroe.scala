@@ -71,3 +71,11 @@ case class Guerrero(
      override val inventario: List[Item] = List(),
      override val trabajo: Trabajo = ninguno
     ) extends Heroe
+    
+    
+case class Ladron(
+    override val stats: Map[String, Int] = Map[String, Int]("hp" -> 100, "fuerza" -> 100, "velocidad" -> 100, "inteligencia" -> 100),
+     override val slots: List[String] = List("cabeza", "torso", "mano", "mano"),
+     override val inventario: List[Item] = List(),
+     override val trabajo: Trabajo = ninguno
+    ) extends Heroe
