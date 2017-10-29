@@ -1,13 +1,14 @@
 package model
 
-trait Stat
+sealed trait Stat
 
 case object HP extends Stat
 case object Velocidad extends Stat
 case object Fuerza extends Stat
 case object Inteligencia extends Stat
 
-trait Slot
+
+sealed trait Slot
 
 case object Cabeza extends Slot
 case object Torso extends Slot

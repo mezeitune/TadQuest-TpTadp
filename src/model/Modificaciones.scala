@@ -1,7 +1,5 @@
 package model
 
-
-
 sealed trait Modificacion
 
 sealed trait ModificacionStat extends Modificacion

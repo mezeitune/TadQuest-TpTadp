@@ -1,8 +1,5 @@
 package model
 
-
-
-
 case class Heroe(
     stats: Map[Stat, Int] = Map[Stat, Int](HP -> 100, Fuerza -> 100, Velocidad -> 100, Inteligencia -> 100),
     slots: List[Slot] = List(Cabeza, Torso, Mano, Mano),
@@ -10,9 +7,7 @@ case class Heroe(
     trabajo: Trabajo = Ninguno
     ) {
   
-  
   def trabajo(nuevoTrabajo: Trabajo) = copy(trabajo = nuevoTrabajo)
-
 
   def getStat(nombreStat: Stat): Int = {
     val modificacionesAAplicar = trabajo.modificaciones ++ inventario.flatMap(_.modificaciones)

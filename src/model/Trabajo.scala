@@ -1,8 +1,8 @@
 package model
 
-class Trabajo (val statPrincipal: Stat, val modificaciones: List[ModificacionStat]) {
-  
-}
+//FALTA AGREGAR MODIFICACIONES DE CADA TRABAJO (!!!)
+
+class Trabajo (val statPrincipal: Stat, val modificaciones: List[ModificacionStat])
 
 case object Guerrero extends Trabajo(Fuerza, List())
 case object Ladron extends Trabajo(Velocidad,List())

@@ -14,7 +14,4 @@ case class Equipo(val nombre:String, val pozoComun: Int = 0, val heroes: List[He
   
   def cantidadMiembrosConTrabajo(unTrabajo:Trabajo) = heroes.count(_.trabajo == unTrabajo)
   
- 
-  
-  
 }
