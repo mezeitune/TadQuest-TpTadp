@@ -8,56 +8,58 @@ package model
 
 trait Tarea{
 
-  def facilidad() : Option[Int]
+  def facilidad(heroe: Heroe, equipo: Equipo) : Option[Int]
+   
   
+/*  def serRealizarPor(equipo:Equipo):Equipo = {
+    
+  }*/
+  
+ 
 
   
   
 }
 
 
-class PelearContraMonstruo (modificaciones: List[Modificacion], heroe: Heroe, equipo: Equipo) extends Tarea{
+class PelearContraMonstruo (modificaciones: List[Modificacion]) extends Tarea{
   
-    def facilidad():Option[Int] ={
+    def facilidad(heroe: Heroe, equipo: Equipo) = {
        
-        equipo.lider() match {
-          case g:Guerrero            => Some(20)
-          case _                     => Some(10)
+        equipo.lider().map(_.trabajo match {
+          case Guerrero           => 20
+          case _                  => 10
           
           
-        }
+        })
         
     }
   
   
 }
 
-class ForzarPuerta (modificaciones: List[Modificacion], heroe: Heroe, equipo: Equipo) extends Tarea{
+class ForzarPuerta (modificaciones: List[Modificacion]) extends Tarea{
   
-    def facilidad():Option[Int] ={
+    def facilidad(heroe: Heroe, equipo: Equipo) = {
        
-     Some(heroe.getStat("inteligencia") + equipo.heroes.foldLeft(0) {(acum, heroe) => 
-      heroe match {
-        case l:Ladron                => acum + 10
-        case _                       => 0
-        }
-      })
+       Some(heroe.getStat(Inteligencia) + equipo.cantidadMiembrosConTrabajo(Ladron)*10)
+      
         
     }
   
   
 }
 
-class RobarTalisman (modificaciones: List[Modificacion], heroe: Heroe, equipo: Equipo) extends Tarea{
+class RobarTalisman (modificaciones: List[Modificacion]) extends Tarea{
   
-    def facilidad():Option[Int] ={
+    def facilidad(heroe: Heroe, equipo: Equipo) = {
        
-        equipo.lider() match {
-          case l:Ladron            => Some(heroe.getStat("velocidad"))
-          case _                   => None
+        equipo.lider().flatMap(_.trabajo match {  //te deja un unico option //VERIFICAR QUE ANDE BIEN!!
+          case Ladron            => Some(heroe.getStat(Velocidad))
+          case _                 => None
           
           
-        }
+        })
         
     }
   

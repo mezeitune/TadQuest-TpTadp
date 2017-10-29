@@ -2,34 +2,32 @@ package model
 
 
 
-class Heroe(
-    val stats: Map[String, Int] = Map[String, Int]("hp" -> 100, "fuerza" -> 100, "velocidad" -> 100, "inteligencia" -> 100),
-    val slots: List[String] = List("cabeza", "torso", "mano", "mano"),
-    val inventario: List[Item] = List(),
-    val trabajo: Trabajo = ninguno
+
+case class Heroe(
+    stats: Map[Stat, Int] = Map[Stat, Int](HP -> 100, Fuerza -> 100, Velocidad -> 100, Inteligencia -> 100),
+    slots: List[Slot] = List(Cabeza, Torso, Mano, Mano),
+    inventario: List[Item] = List(),
+    trabajo: Trabajo = Ninguno
     ) {
   
-  def copy(stats: Map[String, Int] = Map[String, Int]("hp" -> 100, "fuerza" -> 100, "velocidad" -> 100, "inteligencia" -> 100),
-    slots: List[String] = List("cabeza", "torso", "mano", "mano"),
-    inventario: List[Item] = List(),
-    trabajo: Trabajo = ninguno) = new Heroe(stats,slots,inventario,trabajo)
   
   def trabajo(nuevoTrabajo: Trabajo) = copy(trabajo = nuevoTrabajo)
 
-  def getStat(nombreStat: String): Int = {
+
+  def getStat(nombreStat: Stat): Int = {
     val modificacionesAAplicar = trabajo.modificaciones ++ inventario.flatMap(_.modificaciones)
     1.max(aplicarModificaciones(modificacionesAAplicar).getStatBase(nombreStat))
   }
     
-  def getStatBase(nombreStat: String) = {
+  def getStatBase(nombreStat: Stat) = {
     stats(nombreStat)
   }
     
-  def incrementarStatBase(nombreStat: String, valor: Int) = {
+  def incrementarStatBase(nombreStat: Stat, valor: Int) = {
     setStatBase(nombreStat, getStatBase(nombreStat) + valor)
   }
   
-  def setStatBase(nombreStat: String, valor: Int) = {
+  def setStatBase(nombreStat: Stat, valor: Int) = {
     val nuevosStats = stats + (nombreStat -> valor)
     copy(stats = nuevosStats)
   }
@@ -63,19 +61,3 @@ class Heroe(
   def desequipar(item: Item) = copy(inventario = inventario.diff(List(item)))
 
 }
-
-
-case class Guerrero(
-    override val stats: Map[String, Int] = Map[String, Int]("hp" -> 100, "fuerza" -> 100, "velocidad" -> 100, "inteligencia" -> 100),
-     override val slots: List[String] = List("cabeza", "torso", "mano", "mano"),
-     override val inventario: List[Item] = List(),
-     override val trabajo: Trabajo = ninguno
-    ) extends Heroe
-    
-    
-case class Ladron(
-    override val stats: Map[String, Int] = Map[String, Int]("hp" -> 100, "fuerza" -> 100, "velocidad" -> 100, "inteligencia" -> 100),
-     override val slots: List[String] = List("cabeza", "torso", "mano", "mano"),
-     override val inventario: List[Item] = List(),
-     override val trabajo: Trabajo = ninguno
-    ) extends Heroe

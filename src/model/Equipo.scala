@@ -12,4 +12,9 @@ case class Equipo(val nombre:String, val pozoComun: Int = 0, val heroes: List[He
   
   def reemplazarMiembro(nuevoMiembro: Heroe, heroeAEliminar: Heroe) = copy(heroes = heroes.diff(List(heroeAEliminar)) ++ List(nuevoMiembro))
   
+  def cantidadMiembrosConTrabajo(unTrabajo:Trabajo) = heroes.count(_.trabajo == unTrabajo)
+  
+ 
+  
+  
 }
