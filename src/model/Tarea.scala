@@ -1,4 +1,5 @@
 package model
+import scala.util.Try
 
 //FALTA AGREGAR MODIFICACIONES DE CADA TAREA (!!!)
 
@@ -6,9 +7,20 @@ abstract class Tarea(modificaciones: List[Modificacion]){
 
   def facilidad(heroe: Heroe, equipo: Equipo) : Option[Int]
   
-  //def serRealizarPor(equipo:Equipo): Equipo
+  def ejecutar(heroe: Option[Heroe], equipo:Equipo): Try[Equipo] = {
+    heroe match {
+      case Some(heroePosta) => {
+        val heroeModificado = heroePosta.aplicarModificaciones(modificaciones)
+        val equipoActualizado = equipo.reemplazarMiembro(heroeModificado, heroePosta)
+        Try(equipoActualizado)
+      }
+      case None => Try(throw new TareaFallidaError(this, equipo))
+    }
+  }
   
 }
+
+class TareaFallidaError(val tarea: Tarea, val equipo: Equipo) extends RuntimeException
 
 object pelearContraMonstruo extends Tarea(List()){
   
@@ -18,6 +30,8 @@ object pelearContraMonstruo extends Tarea(List()){
           case _                  => 10         
         })
     }
+    
+    
 }
 
 object forzarPuerta extends Tarea(List()){
