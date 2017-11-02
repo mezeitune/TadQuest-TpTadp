@@ -48,11 +48,12 @@ case class Heroe(
 
   def equipar(item: Item): Heroe = {
     if (item.puedeEquiparseEn(this)){
-      val itemsADesequipar = null// = inventario.filter(_.requiereSlot) VER COMO LO OBTENEMOS (!!!)
+      val itemsADesequipar = inventario.filter(unItem => unItem.slotsRequeridos.exists(slot => item.slotsRequeridos.contains(slot)))
       val nuevoInventario = inventario.diff(itemsADesequipar) ++ List(item)
       return copy(inventario = nuevoInventario)
     } else {
-      throw new Exception("No puede equiparse el item") //VER SI CONVIENE QUE ROMPA O NO
+      return this //Opcion 1: devuelve el mismo heroe sin el item que no se pudo equipar
+      //throw new Exception("No puede equiparse el item") //lanza una excepcion
     }
   }
 
