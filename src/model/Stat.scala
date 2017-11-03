@@ -12,4 +12,5 @@ sealed trait Slot
 
 case object Cabeza extends Slot
 case object Torso extends Slot
-case object Mano extends Slot
+case object ManoIzq extends Slot
+case object ManoDer extends Slot

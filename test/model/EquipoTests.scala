@@ -19,8 +19,8 @@ class EquipoTests {
     mago = new Heroe().trabajo(Mago)
     ladron = new Heroe().trabajo(Ladron)
     equipo = new Equipo("losSuperHeroes", 0, List(guerrero, mago, ladron))
-    espada = new Item(List(Mano), List((heroe => heroe.stats.get(Fuerza).get > 50)), List(VariarStatEn(Fuerza,100)), 200)
-    espadaDeCarton = new Item(List(Mano), List(), List(VariarStatEn(Fuerza,0)), 5)
+    espada = new Item(List(ManoDer), List((heroe => heroe.stats.get(Fuerza).get > 50)), List(VariarStatEn(Fuerza,100)), 200)
+    espadaDeCarton = new Item(List(ManoDer), List(), List(VariarStatEn(Fuerza,0)), 5)
   }
   
   //Tests: Punto 2 -> Hay equipo

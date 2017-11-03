@@ -8,7 +8,7 @@ case class Heroe(
   require(stats.keys.sameElements(List(HP,Fuerza,Velocidad,Inteligencia)))//EN REALIDAD EL ORDEN NO IMPORTARIA, PERO MEH
   //HAY RESTRICCIONES PARA LOS VALORES QUE PUEDE TOMAR UN STAT BASE ???
   
-  def slots: List[Slot] = List(Cabeza, Torso, Mano, Mano)
+  def slots: List[Slot] = List(Cabeza, Torso, ManoIzq, ManoDer)
   
   def trabajo(nuevoTrabajo: Trabajo) = copy(trabajo = nuevoTrabajo)
 

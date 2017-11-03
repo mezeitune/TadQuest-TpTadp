@@ -15,8 +15,8 @@ class HeroesTests {
   def setup(){
     heroe = new Heroe().trabajo(Guerrero)
     mago = new Heroe().trabajo(Mago)
-    espada = new Item(List(Mano), List((heroe => heroe.stats.get(Fuerza).get > 50)), List(VariarStatEn(Fuerza,100)), 200)
-    lanza = new Item(List(Mano), List((heroe => heroe.stats.get(Fuerza).get > 200)), List(), 250)
+    espada = new Item(List(ManoDer), List((heroe => heroe.stats.get(Fuerza).get > 50)), List(VariarStatEn(Fuerza,100)), 200)
+    lanza = new Item(List(ManoDer), List((heroe => heroe.stats.get(Fuerza).get > 200)), List(), 250)
   }
   
   //Tests: Punto 1 -> Forjando un heroe
