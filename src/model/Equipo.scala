@@ -4,10 +4,10 @@ case class Equipo(val nombre: String, val pozoComun: Int = 0, val heroes: List[H
 
   def mejorHeroeSegun(criterio: Heroe => Int) = heroes.sortWith((heroe1, heroe2) => criterio.apply(heroe1) >= criterio.apply(heroe2)).headOption
 
-  def lider() = mejorHeroeSegun { _.valorStatPrincipal() } // HABRÍA QUE CHEQUEAR EL EMPATE (!!!)
+  def lider() = mejorHeroeSegun { _.valorStatPrincipal() }
 
   def obtenerItem(item: Item) = {
-    def incrementoStatPrincipal(heroe: Heroe, item: Item) = { // EL MAYOR INCREMENTO TIENE QUE SER ABSOLUTO O RELATIVO ???
+    def incrementoStatPrincipal(heroe: Heroe, item: Item) = {
       heroe.equipar(item).valorStatPrincipal - heroe.valorStatPrincipal
     }
     val heroeAEquiparItem = mejorHeroeSegun(heroe => incrementoStatPrincipal(heroe, item))

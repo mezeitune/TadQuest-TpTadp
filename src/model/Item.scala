@@ -1,5 +1,4 @@
 package model
-import Types._
 
 class Item (val slotsRequeridos: List[Slot],
     val restricciones: List[Restriccion],

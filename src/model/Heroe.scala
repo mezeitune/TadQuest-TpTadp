@@ -53,7 +53,7 @@ case class Heroe(
       return copy(inventario = nuevoInventario)
     } else {
       return this //Opcion 1: devuelve el mismo heroe sin el item que no se pudo equipar
-      //throw new Exception("No puede equiparse el item") //lanza una excepcion
+      //Opcion posta: retornar un Try[Heroe]
     }
   }
 
