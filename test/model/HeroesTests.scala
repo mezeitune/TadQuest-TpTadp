@@ -23,19 +23,18 @@ class HeroesTests {
   
   @Test
   def heroeEquipaItemCorrectamente(){
-    val heroeEquipado = heroe.equipar(espada)
+    val heroeEquipado = heroe.equipar(espada).get
     Assert.assertTrue(heroeEquipado.inventario.contains(espada))
   }
    
-  @Test
+  @Test(expected = classOf[NoSePuedeEquiparItemError])
   def heroeNoPuedeEquiparItemPorRestriccion(){
-    val heroeEquipado = heroe.equipar(lanza)
-    Assert.assertFalse(heroeEquipado.inventario.contains(lanza))
+    heroe.equipar(lanza).get
   }
   
   @Test
   def heroeEquipaEspadaQueAumentaFuerza(){
-    val heroeEquipado = heroe.equipar(espada)
+    val heroeEquipado = heroe.equipar(espada).get
     Assert.assertEquals(215, heroeEquipado.getStat(Fuerza))
   }
   
@@ -52,7 +51,7 @@ class HeroesTests {
   
   @Test
   def HeroeDesequipaItemCorrectamente(){
-    val heroeEquipado = heroe.equipar(espada)
+    val heroeEquipado = heroe.equipar(espada).get
     val heroeDesequipado = heroeEquipado.desequipar(espada)
     Assert.assertFalse(heroeDesequipado.inventario.contains(espada))
   }

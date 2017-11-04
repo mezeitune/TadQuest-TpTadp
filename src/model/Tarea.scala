@@ -1,7 +1,5 @@
 package model
-import scala.util.Try
-import scala.util.Failure
-import scala.util.Success
+import scala.util.{ Try, Success, Failure }
 
 //FALTA AGREGAR MODIFICACIONES DE CADA TAREA (!!!)
 
@@ -9,29 +7,22 @@ abstract class Tarea(modificaciones: List[Modificacion]) {
 
   def facilidad(heroe: Heroe, equipo: Equipo): Option[Int]
 
-  def ejecutar(heroe: Option[Heroe], equipo: Equipo): Try[Equipo] = {
-    val bla: Option[String] = ???
-    heroe.fold[Try[Equipo]](Failure(new TareaFallidaError(this, equipo))) { heroePosta =>
+  def realizarsePor(equipo: Equipo): Try[Equipo] = {
+    def heroeQueVaARealizarla(equipo: Equipo): Option[Heroe] = {
+      equipo.mejorHeroeSegun { heroe => facilidad(heroe, equipo).getOrElse(Int.MinValue) } //VER QUÉ PASA SI NINGUNO PUEDE REALIZARLA (!!!)
+    }
+    heroeQueVaARealizarla(equipo).fold[Try[Equipo]](Failure(new TareaFallidaError(this, equipo))) { heroePosta =>
       val heroeModificado = heroePosta.aplicarModificaciones(modificaciones)
       val equipoActualizado = equipo.reemplazarMiembro(heroeModificado, heroePosta)
       Success(equipoActualizado)
     }
-   
+
     //Otra forma:
-//    heroe.map { heroePosta =>
-//      val heroeModificado = heroePosta.aplicarModificaciones(modificaciones)
-//      val equipoActualizado = equipo.reemplazarMiembro(heroeModificado, heroePosta)
-//      Success(equipoActualizado)
-//    }.getOrElse(Failure(new TareaFallidaError(this, equipo)))
-    
-    //    heroe match {
-    //      case Some(heroePosta) => {
-    //        val heroeModificado = heroePosta.aplicarModificaciones(modificaciones)
-    //        val equipoActualizado = equipo.reemplazarMiembro(heroeModificado, heroePosta)
-    //        Try(equipoActualizado)
-    //      }
-    //      case None => Try(throw new TareaFallidaError(this, equipo))
-    //    }
+    //    heroeQueVaARealizarla(equipo).map { heroePosta =>
+    //      val heroeModificado = heroePosta.aplicarModificaciones(modificaciones)
+    //      val equipoActualizado = equipo.reemplazarMiembro(heroeModificado, heroePosta)
+    //      Success(equipoActualizado)
+    //    }.getOrElse(Failure(new TareaFallidaError(this, equipo)))
   }
 
 }
