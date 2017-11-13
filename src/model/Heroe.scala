@@ -47,8 +47,7 @@ case class Heroe(
   }
    
   def aplicarModificaciones(modificaciones: List[Modificacion]) = {
-    modificaciones.foldLeft(this) {(heroe, modificacion) => modificacion(heroe)}
-    //SE PODRÍAN ORDENAR LAS MODIFICACIONES EN BASE A SU TIPO (PARA QUE LAS ABSORBENTES VAYAN AL FINAL) (!!!)
+    modificaciones.sorted.foldLeft(this) {(heroe, modificacion) => modificacion(heroe)}
   }
   
   def valorStatPrincipal() = getStat(trabajo.statPrincipal)
