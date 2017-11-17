@@ -9,7 +9,8 @@ abstract class Tarea(modificaciones: List[Modificacion]) {
 
   def realizarsePor(equipo: Equipo): Try[Equipo] = {
     def heroeQueVaARealizarla(equipo: Equipo): Option[Heroe] = {
-      equipo.mejorHeroeSegun { heroe => facilidad(heroe, equipo).getOrElse(Int.MinValue) } //VER QUÉ PASA SI NINGUNO PUEDE REALIZARLA (!!!)
+      equipo.mejorHeroeSegun { heroe => facilidad(heroe, equipo).getOrElse(Int.MinValue) }
+        .flatMap { heroe => if (facilidad(heroe, equipo).isDefined) Some(heroe) else None }//En caso de que ninguno pueda realizarla
     }
     heroeQueVaARealizarla(equipo).fold[Try[Equipo]](Failure(new TareaFallidaError(this, equipo))) { heroePosta =>
       val heroeModificado = heroePosta.aplicarModificaciones(modificaciones)
