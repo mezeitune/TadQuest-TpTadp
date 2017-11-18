@@ -21,8 +21,7 @@ case class Heroe(
     inventario: List[Item] = List(),
     trabajo: Trabajo = Ninguno
     ) {
-  require(stats.keys.sameElements(List(HP,Fuerza,Velocidad,Inteligencia)))//EN REALIDAD EL ORDEN NO IMPORTARIA, PERO MEH
-  //HAY RESTRICCIONES PARA LOS VALORES QUE PUEDE TOMAR UN STAT BASE ???
+  require(stats.keys.sameElements(List(HP,Fuerza,Velocidad,Inteligencia)))
   
   def slots: List[Slot] = List(Cabeza, Torso, ManoIzq, ManoDer)
   
@@ -54,7 +53,7 @@ case class Heroe(
 
   def equipar(item: Item): Try[Heroe] = {
     if (item.puedeEquiparseEn(this)){
-      val itemsADesequipar = inventario.filter(unItem => unItem.slotsRequeridos.exists(slot => item.slotsRequeridos.contains(slot)))//DESEQUIPA AMBAS MANOS EN VEZ DE UNA SOLA (!!!)
+      val itemsADesequipar = inventario.filter(unItem => unItem.slotsRequeridos.exists(slot => item.slotsRequeridos.contains(slot)))
       val nuevoInventario = inventario.diff(itemsADesequipar) ++ List(item)
       return Success(copy(inventario = nuevoInventario))
     } else {
