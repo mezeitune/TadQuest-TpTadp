@@ -1,5 +1,7 @@
 package model
 
+// ORDENADOR (!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+
 sealed trait Modificacion extends Ordered[Modificacion]{
   val prioridad: PrioridadModificacion
   def apply(heroe: Heroe): Heroe
@@ -47,14 +49,9 @@ case class IncrementarStatsEnPorcentajeDePrincipal(porcentaje: Float) extends Mo
   }
 }
 
-sealed abstract class PrioridadModificacion (val prioridad: Int) extends Ordered[PrioridadModificacion]{//MEJOR FORMA DE ORDENAR (???)
+sealed abstract class PrioridadModificacion (val prioridad: Int) extends Ordered[PrioridadModificacion]{
   def compare(that: PrioridadModificacion) = this.prioridad - that.prioridad
 }
 case object ALTA extends PrioridadModificacion(3)
 case object MEDIA extends PrioridadModificacion(2)
 case object BAJA extends PrioridadModificacion(1)
-
-/*type Modificacion = Heroe => Heroe //YA NO PUEDE SER CUALQUIER FUNCIÓN, PORQUE ADEMÁS DE APLICARSE TIENE QUE PODER ORDENARSE
-sealed trait ModificacionStat extends Function1[Heroe,Heroe]{//SI NO EXTIENDE DE FUNCTION, SCALA NO LO RECONOCE COMO DE TIPO MODIFICACION (!!!)
-  def apply(heroe: Heroe): Heroe
-}*/

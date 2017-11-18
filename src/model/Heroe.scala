@@ -19,16 +19,16 @@ case object ManoDer extends Slot
 case class Heroe(
     stats: Map[Stat, Int] = Map[Stat, Int](HP -> 100, Fuerza -> 100, Velocidad -> 100, Inteligencia -> 100),
     inventario: List[Item] = List(),
-    trabajo: Trabajo = Ninguno
+    trabajo: Option[Trabajo] = None
     ) {
   require(stats.keys.sameElements(List(HP,Fuerza,Velocidad,Inteligencia)))
   
   def slots: List[Slot] = List(Cabeza, Torso, ManoIzq, ManoDer)
   
-  def trabajo(nuevoTrabajo: Trabajo) = copy(trabajo = nuevoTrabajo)
+  def trabajo(nuevoTrabajo: Trabajo) = copy(trabajo = Some(nuevoTrabajo))
 
   def getStat(nombreStat: Stat): Int = {
-    val modificacionesAAplicar = trabajo.modificaciones ++ inventario.flatMap(_.modificaciones)
+    val modificacionesAAplicar = inventario.flatMap(_.modificaciones) ++ trabajo.fold[List[ModificacionStat]](List())(_.modificaciones)
     1.max(aplicarModificaciones(modificacionesAAplicar).getStatBase(nombreStat))
   }
     
@@ -49,7 +49,7 @@ case class Heroe(
     modificaciones.sorted.foldLeft(this) {(heroe, modificacion) => modificacion(heroe)}
   }
   
-  def valorStatPrincipal() = getStat(trabajo.statPrincipal)
+  def valorStatPrincipal() = trabajo.map{t => getStat(t.statPrincipal)}.getOrElse(0)//ROMPE SI USO GUIÓN BAJO (???)
 
   def equipar(item: Item): Try[Heroe] = {
     if (item.puedeEquiparseEn(this)){

@@ -17,7 +17,7 @@ case object EscudoAntiRobo extends Item(List(ManoIzq), List(heroe => heroe.stats
 case object TalismanDeDedicacion extends Item(List(), List(), List(IncrementarStatsEnPorcentajeDePrincipal(10)), 350)
 case object TalismanDelMinimalismo extends Item(List(), List(), List(ModificarStatPorCantidadItems(HP,50),ModificarStatPorCantidadItems(HP,50)), 800)
 
-case object VinchaDelBufaloDeAgua extends Item(List(Cabeza), List(heroe => heroe.trabajo == Ninguno), List(), 650) //ver
+case object VinchaDelBufaloDeAgua extends Item(List(Cabeza), List(heroe => heroe.trabajo.isEmpty), List(), 650) //ver
 
 case object TalismanMaldito extends Item(List(), List(), List(ModificarTodosLosStats(1)), 1)
 case object EspadaDeLaVida extends Item(List(ManoIzq), List(), List(SetearStatSegun(Fuerza,HP)), 1000)

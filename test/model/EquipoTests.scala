@@ -45,14 +45,14 @@ class EquipoTests {
   
   @Test
   def equipoObtieneNuevoMiembro(){
-    val nuevoMiembro = new Heroe().trabajo(Ninguno)
+    val nuevoMiembro = new Heroe()
     val nuevoEquipo = equipo.obtenerMiembro(nuevoMiembro)
     Assert.assertTrue(nuevoEquipo.heroes.contains(nuevoMiembro))
   }
   
   @Test
   def equipoReemplazaMiembroConOtro(){
-    val nuevoMiembro = new Heroe().trabajo(Ninguno)
+    val nuevoMiembro = new Heroe()
     val nuevoEquipo = equipo.reemplazarMiembro(nuevoMiembro, guerrero)
     Assert.assertTrue(nuevoEquipo.heroes.contains(nuevoMiembro) && !nuevoEquipo.heroes.contains(guerrero))
   }

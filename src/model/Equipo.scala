@@ -1,4 +1,5 @@
 package model
+import scala.util.{Try, Success, Failure}
 
 case class Equipo(val nombre: String, val pozoComun: Int = 0, val heroes: List[Heroe] = List()) {
 
@@ -22,6 +23,17 @@ case class Equipo(val nombre: String, val pozoComun: Int = 0, val heroes: List[H
 
   def reemplazarMiembro(nuevoMiembro: Heroe, heroeAEliminar: Heroe) = copy(heroes = heroes.diff(List(heroeAEliminar)) ++ List(nuevoMiembro))
 
-  def cantidadMiembrosConTrabajo(unTrabajo: Trabajo) = heroes.count(_.trabajo == unTrabajo)
+  def cantidadMiembrosConTrabajo(unTrabajo: Trabajo) = heroes.count(_.trabajo.contains(unTrabajo))
 
+  def elegirMision(misiones: TablonDeAnuncios, criterio: CriterioMision) = misiones.filter(_.serRealizadaPor(this).isSuccess)
+    .sortWith((mision1, mision2) => criterio(mision1.serRealizadaPor(this).get, mision2.serRealizadaPor(this).get))
+    .headOption
+
+  def entrenar(misiones: TablonDeAnuncios, criterio: CriterioMision): Try[Equipo] = {
+    elegirMision(misiones, criterio).map { mejorMision =>
+      val equipoLuegoDeMision = mejorMision.serRealizadaPor(this)
+      equipoLuegoDeMision.flatMap {_.entrenar(misiones.filter(!_.equals(mejorMision)), criterio)}//ENTRA EN UN CICLO INFINITO (???)
+    }.getOrElse(Success(this))//VER QUÉ PASA SI NO QUEDAN MISIONES VS SI QUEDAN PERO NINGUNA SE PUEDE REALIZAR (!!!)
+  }  
+  
 }

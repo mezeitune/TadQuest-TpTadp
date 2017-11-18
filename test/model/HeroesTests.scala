@@ -41,7 +41,7 @@ class HeroesTests {
   @Test
   def heroeCambiaDeTrabajo(){
     val heroeNuevoTrabajo = heroe.trabajo(Mago)
-    Assert.assertEquals(Mago, heroeNuevoTrabajo.trabajo)
+    Assert.assertEquals(Mago, heroeNuevoTrabajo.trabajo.get)
   }
   
   @Test
