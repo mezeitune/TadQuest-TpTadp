@@ -8,6 +8,29 @@ sealed trait Modificacion extends Ordered[Modificacion]{
 
 sealed trait ModificacionStat extends Modificacion
 
+case class ModificarStatPorCantidadItems(stat: Stat, valor: Int) extends ModificacionStat {
+  val prioridad = BAJA
+  def apply(heroe: Heroe) = {
+    val cantItems = heroe.inventario.size
+    val valorAumentado = cantItems * valor
+    heroe.incrementarStatBase(stat, valorAumentado)
+  }
+}
+
+case class SetearStatSegun(statAModificar: Stat , stat: Stat) extends ModificacionStat {
+  val prioridad = BAJA
+  def apply(heroe: Heroe) = {
+    heroe.setStatBase(stat, heroe.stats.get(stat).get)
+  }
+}
+
+case class ModificarTodosLosStats(valor: Int) extends ModificacionStat {
+  val prioridad = BAJA
+  def apply(heroe: Heroe) = {
+    heroe.stats.keys.foldLeft(heroe) {(heroe,stat) => heroe.setStatBase(stat, 1)}
+  }
+}
+
 case class VariarStatEn(stat: Stat, valor: Int) extends ModificacionStat {
   val prioridad = ALTA
   def apply(heroe: Heroe) = heroe.incrementarStatBase(stat, valor)
