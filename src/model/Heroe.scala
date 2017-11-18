@@ -40,6 +40,7 @@ case class Heroe(
     setStatBase(nombreStat, getStatBase(nombreStat) + valor)
   }
   
+
   def setStatBase(nombreStat: Stat, valor: Int) = {
     val nuevosStats = stats + (nombreStat -> valor)
     copy(stats = nuevosStats)

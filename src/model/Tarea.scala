@@ -30,7 +30,7 @@ abstract class Tarea(modificaciones: List[Modificacion]) {
 
 class TareaFallidaError(val tarea: Tarea, val equipo: Equipo) extends RuntimeException
 
-object pelearContraMonstruo extends Tarea(List()) {
+object pelearContraMonstruo extends Tarea(List(VariarStatEnSi(HP, (-4), {_.getStat(Fuerza)<20}))) {
 
   def facilidad(heroe: Heroe, equipo: Equipo) = {
     equipo.lider().map(_.trabajo match {

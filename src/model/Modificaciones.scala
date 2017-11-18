@@ -49,6 +49,18 @@ case class IncrementarStatsEnPorcentajeDePrincipal(porcentaje: Float) extends Mo
   }
 }
 
+case class VariarStatEnSi(stat: Stat, valor: Int, condicion: Restriccion) extends ModificacionStat {
+  val prioridad = ALTA
+  def apply(heroe: Heroe)={
+    var aMod=0
+    if(condicion(heroe)){
+      aMod=valor
+    }
+    heroe.incrementarStatBase(stat, aMod)
+  }
+}
+
+
 sealed abstract class PrioridadModificacion (val prioridad: Int) extends Ordered[PrioridadModificacion]{
   def compare(that: PrioridadModificacion) = this.prioridad - that.prioridad
 }
