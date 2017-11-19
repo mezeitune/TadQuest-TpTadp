@@ -23,7 +23,7 @@ case class Equipo(val nombre: String, val pozoComun: Int = 0, val heroes: List[H
 
   def reemplazarMiembro(nuevoMiembro: Heroe, heroeAEliminar: Heroe) = copy(heroes = heroes.diff(List(heroeAEliminar)) ++ List(nuevoMiembro))
 
-  def cantidadMiembrosConTrabajo(unTrabajo: Trabajo) = heroes.count(_.trabajo.contains(unTrabajo))
+  def cantidadMiembrosConTrabajo(unTrabajo: Trabajo) = heroes.count(_.tieneTrabajo(unTrabajo))
 
   def elegirMision(misiones: TablonDeAnuncios, criterio: CriterioMision) = misiones.filter(_.serRealizadaPor(this).isSuccess)
     .sortWith((mision1, mision2) => criterio(mision1.serRealizadaPor(this).get, mision2.serRealizadaPor(this).get))

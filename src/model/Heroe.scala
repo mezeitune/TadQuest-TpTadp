@@ -26,6 +26,8 @@ case class Heroe(
   def slots: List[Slot] = List(Cabeza, Torso, ManoIzq, ManoDer)
   
   def trabajo(nuevoTrabajo: Trabajo) = copy(trabajo = Some(nuevoTrabajo))
+  
+  def tieneTrabajo(unTrabajo: Trabajo) = trabajo.contains(trabajo)
 
   def getStat(nombreStat: Stat): Int = {
     val modificacionesAAplicar = inventario.flatMap(_.modificaciones) ++ trabajo.fold[List[ModificacionStat]](List())(_.modificaciones)
@@ -39,7 +41,6 @@ case class Heroe(
   def incrementarStatBase(nombreStat: Stat, valor: Int) = {
     setStatBase(nombreStat, getStatBase(nombreStat) + valor)
   }
-  
 
   def setStatBase(nombreStat: Stat, valor: Int) = {
     val nuevosStats = stats + (nombreStat -> valor)

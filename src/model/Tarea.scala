@@ -1,8 +1,6 @@
 package model
 import scala.util.{Try, Success, Failure}
 
-//FALTA AGREGAR MODIFICACIONES DE CADA TAREA (!!!)
-
 abstract class Tarea(modificaciones: List[Modificacion]) {
 
   def facilidad(heroe: Heroe, equipo: Equipo): Option[Int]
@@ -17,13 +15,6 @@ abstract class Tarea(modificaciones: List[Modificacion]) {
       val equipoActualizado = equipo.reemplazarMiembro(heroeModificado, heroePosta)
       Success(equipoActualizado)
     }
-
-    //Otra forma:
-    //    heroeQueVaARealizarla(equipo).map { heroePosta =>
-    //      val heroeModificado = heroePosta.aplicarModificaciones(modificaciones)
-    //      val equipoActualizado = equipo.reemplazarMiembro(heroeModificado, heroePosta)
-    //      Success(equipoActualizado)
-    //    }.getOrElse(Failure(new TareaFallidaError(this, equipo)))
   }
 
 }
@@ -41,7 +32,8 @@ object pelearContraMonstruo extends Tarea(List(VariarStatEnSi(HP, (-4), {_.getSt
 
 }
 
-object forzarPuerta extends Tarea(List()) {
+object forzarPuerta extends Tarea(List(VariarStatEnSi(Fuerza, 1, {heroe => !heroe.tieneTrabajo(Ladron) && !heroe.tieneTrabajo(Mago)}),
+    VariarStatEnSi(HP, (-5), {heroe => !heroe.tieneTrabajo(Ladron) && !heroe.tieneTrabajo(Mago)}))) {//NO ESTA BUENO REPETIR LA CONDICIÓN
 
   def facilidad(heroe: Heroe, equipo: Equipo) = {
     Some(heroe.getStat(Inteligencia) + equipo.cantidadMiembrosConTrabajo(Ladron) * 10)
@@ -49,7 +41,7 @@ object forzarPuerta extends Tarea(List()) {
 
 }
 
-object robarTalisman extends Tarea(List()) {
+object robarTalisman extends Tarea(List(AgregarItem(TalismanDelMinimalismo))) {
 
   def facilidad(heroe: Heroe, equipo: Equipo) = {
     equipo.lider().flatMap(_.trabajo match { //te deja un unico option //VERIFICAR QUE ANDE BIEN!!

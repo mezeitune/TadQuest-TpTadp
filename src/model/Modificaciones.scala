@@ -8,6 +8,11 @@ sealed trait Modificacion extends Ordered[Modificacion]{
   def compare(that: Modificacion) = this.prioridad.compare(that.prioridad)
 }
 
+case class AgregarItem(itemAAgregar: Item) extends Modificacion {
+  val prioridad = BAJA
+  def apply(heroe: Heroe) = heroe.equipar(itemAAgregar).getOrElse(heroe)//DEBERIA FALLAR SI NO SE PUEDE EQUIPAR, PERO ESO ROMPERIA LA FIRMA
+}
+
 sealed trait ModificacionStat extends Modificacion
 
 case class ModificarStatPorCantidadItems(stat: Stat, valor: Int) extends ModificacionStat {
