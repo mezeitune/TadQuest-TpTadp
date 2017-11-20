@@ -1,22 +1,29 @@
 package model
 
-// ORDENADOR (!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+package object OrdenadorModificaciones{
+  implicit object ModificacionOrdering extends Ordering[Modificacion]{
+    def compare(a: Modificacion, b: Modificacion) = {
+//      val ordenModificaciones = List(AgregarItem,VariarStatEn,VariarStatEnSi,ModificarStatPorCantidadItems,
+//          IncrementarStatsEnPorcentajeDePrincipal,SetearStat,SetearStatSegun,ModificarTodosLosStats)
+      a.prioridad.compare(b.prioridad)
+    }
+  }
+}
 
-sealed trait Modificacion extends Ordered[Modificacion]{
+sealed trait Modificacion{
   val prioridad: PrioridadModificacion
   def apply(heroe: Heroe): Heroe
-  def compare(that: Modificacion) = this.prioridad.compare(that.prioridad)
 }
 
 case class AgregarItem(itemAAgregar: Item) extends Modificacion {
-  val prioridad = BAJA
+  val prioridad = ALTA
   def apply(heroe: Heroe) = heroe.equipar(itemAAgregar).getOrElse(heroe)//DEBERIA FALLAR SI NO SE PUEDE EQUIPAR, PERO ESO ROMPERIA LA FIRMA
 }
 
 sealed trait ModificacionStat extends Modificacion
 
 case class ModificarStatPorCantidadItems(stat: Stat, valor: Int) extends ModificacionStat {
-  val prioridad = BAJA
+  val prioridad = MEDIA
   def apply(heroe: Heroe) = {
     val cantItems = heroe.inventario.size
     val valorAumentado = cantItems * valor
