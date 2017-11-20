@@ -44,7 +44,7 @@ object forzarPuerta extends Tarea(List(VariarStatEnSi(Fuerza, 1, {heroe => !hero
 object robarTalisman extends Tarea(List(AgregarItem(TalismanDelMinimalismo))) {
 
   def facilidad(heroe: Heroe, equipo: Equipo) = {
-    equipo.lider().flatMap(_.trabajo match { //te deja un unico option //VERIFICAR QUE ANDE BIEN!!
+    equipo.lider().flatMap(_.trabajo match {
       case Some(Ladron) => Some(heroe.getStat(Velocidad))
       case _ => None
     })

@@ -32,8 +32,8 @@ case class Equipo(val nombre: String, val pozoComun: Int = 0, val heroes: List[H
   def entrenar(misiones: TablonDeAnuncios, criterio: CriterioMision): Try[Equipo] = {
     elegirMision(misiones, criterio).map { mejorMision =>
       val equipoLuegoDeMision = mejorMision.serRealizadaPor(this)
-      equipoLuegoDeMision.flatMap {_.entrenar(misiones.filter(!_.equals(mejorMision)), criterio)}//ENTRA EN UN CICLO INFINITO (???)
-    }.getOrElse(Success(this))//VER QUÉ PASA SI NO QUEDAN MISIONES VS SI QUEDAN PERO NINGUNA SE PUEDE REALIZAR (!!!)
+      equipoLuegoDeMision.flatMap {_.entrenar(misiones.filter(!_.equals(mejorMision)), criterio)}
+    }.getOrElse(Success(this))//TANTO SI NO HAY MISIONES COMO SI QUEDAN PERO NINGUNA SE PUEDE REALIZAR, DEVUELVE EL EQUIPO ORIGINAL (!!!)
   }  
   
 }

@@ -6,7 +6,7 @@ object OrdenadorModificaciones{
       val ordenModificaciones = List(AgregarItem,VariarStatEn,VariarStatEnSi,ModificarStatPorCantidadItems,
           IncrementarStatsEnPorcentajeDePrincipal,SetearStat,SetearStatSegun,ModificarTodosLosStats)
       ordenModificaciones.indexOf(a.getClass) - ordenModificaciones.indexOf(b.getClass)
-      //a.prioridad.compare(b.prioridad)
+      //a.prioridad.compare(b.prioridad) //DEFINIR BIEN FORMA DE COMPARAR (!!!)
     }
   }
 }

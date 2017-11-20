@@ -39,5 +39,11 @@ class MisionesTests {
     val argumentoDeLotrReducido = new Mision(List(forzarPuerta, pelearContraMonstruo), {_.obtenerItem(anilloUnico)})
     Assert.assertEquals(1000000,argumentoDeLotrReducido.serRealizadaPor(comunidadDelAnillo).get.pozoComun)
   }
+  
+  @Test
+  def unEquipoEntrenaExitosamente(){
+    val equipoFinal = comunidadDelAnillo.entrenar(List(argumentoDeLotr), {(equipo1, equipo2) => equipo1.lider.get.valorStatPrincipal() > equipo2.lider.get.valorStatPrincipal()})
+    Assert.assertEquals(120, equipoFinal.get.lider().get.valorStatPrincipal())
+  }
 
 }
