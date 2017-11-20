@@ -1,11 +1,12 @@
 package model
 
-package object OrdenadorModificaciones{
+object OrdenadorModificaciones{
   implicit object ModificacionOrdering extends Ordering[Modificacion]{
     def compare(a: Modificacion, b: Modificacion) = {
-//      val ordenModificaciones = List(AgregarItem,VariarStatEn,VariarStatEnSi,ModificarStatPorCantidadItems,
-//          IncrementarStatsEnPorcentajeDePrincipal,SetearStat,SetearStatSegun,ModificarTodosLosStats)
-      a.prioridad.compare(b.prioridad)
+      val ordenModificaciones = List(AgregarItem,VariarStatEn,VariarStatEnSi,ModificarStatPorCantidadItems,
+          IncrementarStatsEnPorcentajeDePrincipal,SetearStat,SetearStatSegun,ModificarTodosLosStats)
+      ordenModificaciones.indexOf(a.getClass) - ordenModificaciones.indexOf(b.getClass)
+      //a.prioridad.compare(b.prioridad)
     }
   }
 }

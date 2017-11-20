@@ -28,7 +28,7 @@ case class Heroe(
   
   def trabajo(nuevoTrabajo: Trabajo) = copy(trabajo = Some(nuevoTrabajo))
   
-  def tieneTrabajo(unTrabajo: Trabajo) = trabajo.contains(trabajo)
+  def tieneTrabajo(unTrabajo: Trabajo) = trabajo.contains(unTrabajo)
 
   def getStat(nombreStat: Stat): Int = {
     val modificacionesAAplicar = inventario.flatMap(_.modificaciones) ++ trabajo.fold[List[ModificacionStat]](List())(_.modificaciones)

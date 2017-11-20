@@ -65,9 +65,9 @@ class HeroesTests {
   
   @Test
   def seVariaLaFuerzaEn100YSeIncrementanStatsEnPorcentajeDePrincipalPor50Correctamente(){
-    val modificaciones: List[Modificacion] =  List(VariarStatEn(Fuerza,100),IncrementarStatsEnPorcentajeDePrincipal(50))
+    val modificaciones: List[Modificacion] =  List(VariarStatEn(Fuerza,100),IncrementarStatsEnPorcentajeDePrincipal(0.5f))
     val heroeModificado = heroe.aplicarModificaciones(modificaciones)
-    Assert.assertEquals(5965,heroeModificado.getStat(Fuerza))
+    Assert.assertEquals(323,heroeModificado.getStat(Fuerza))
   }
   
 }
