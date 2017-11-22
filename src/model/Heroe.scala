@@ -1,6 +1,5 @@
 package model
 import scala.util.{ Try, Success, Failure }
-import OrdenadorModificaciones._
 
 sealed trait Stat
 

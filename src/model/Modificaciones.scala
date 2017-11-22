@@ -1,6 +1,6 @@
 package model
 
-object OrdenadorModificaciones{
+object Modificacion{
   implicit object ModificacionOrdering extends Ordering[Modificacion]{
     def compare(a: Modificacion, b: Modificacion) = {
       val ordenModificaciones = List(AgregarItem,VariarStatEn,VariarStatEnSi,ModificarStatPorCantidadItems,
