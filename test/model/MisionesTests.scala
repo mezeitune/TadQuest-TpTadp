@@ -29,9 +29,9 @@ class MisionesTests {
     Assert.assertTrue(robarTalisman.facilidad(gollum, comunidadDelAnillo).isEmpty)
   }
   
-  @Test(expected = classOf[TareaFallidaError])
-  def intentarQueLaComunidadDelAnilloCompleteElArgumentoDeLOTRFallaPorqueNadiePuedeRobarTalisman() {
-    argumentoDeLotr.serRealizadaPor(comunidadDelAnillo).get
+  @Test
+  def laComunidadDelAnilloCompletaParcialmenteElArgumentoDeLOTRPorqueNadiePuedeRobarTalisman() {
+    Assert.assertTrue(argumentoDeLotr.serRealizadaPor(comunidadDelAnillo).isInstanceOf[ParcialmenteFallido])
   }
   
   @Test

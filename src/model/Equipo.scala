@@ -29,11 +29,11 @@ case class Equipo(val nombre: String, val pozoComun: Int = 0, val heroes: List[H
     .sortWith((mision1, mision2) => criterio(mision1.serRealizadaPor(this).get, mision2.serRealizadaPor(this).get))
     .headOption
 
-  def entrenar(misiones: TablonDeAnuncios, criterio: CriterioMision): Try[Equipo] = {
+  def entrenar(misiones: TablonDeAnuncios, criterio: CriterioMision): EstadoEquipo = {
     elegirMision(misiones, criterio).map { mejorMision =>
       val equipoLuegoDeMision = mejorMision.serRealizadaPor(this)
       equipoLuegoDeMision.flatMap {_.entrenar(misiones.filter(!_.equals(mejorMision)), criterio)}
-    }.getOrElse(Success(this))//TANTO SI NO HAY MISIONES COMO SI QUEDAN PERO NINGUNA SE PUEDE REALIZAR, DEVUELVE EL EQUIPO ORIGINAL (!!!)
+    }.getOrElse(SinFallos(this))//TANTO SI NO HAY MISIONES COMO SI QUEDAN PERO NINGUNA SE PUEDE REALIZAR, DEVUELVE EL EQUIPO ORIGINAL (!!!)
   }  
   
 }
