@@ -17,7 +17,7 @@ case class SinFallos(equipo: Equipo) extends EstadoEquipo(equipo){
 case class ParcialmenteFallido(equipo: Equipo, tareaFallada: Tarea) extends EstadoEquipo(equipo){
   def realizar(tarea: Tarea): EstadoEquipo = tarea.realizarsePor(equipo).map{ e => ParcialmenteFallido(e,tareaFallada) }
     .getOrElse(Fallido(equipo, tarea))
-  def map(f: Equipo => Equipo) = copy(equipo = f(equipo))
+  def map(f: Equipo => Equipo) = this
 }
 
 case class Fallido(equipo: Equipo, tareaFallada: Tarea) extends EstadoEquipo(equipo){
